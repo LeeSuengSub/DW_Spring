@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--Mybatis에게 Mapper 경로를 적어야 한다.  -->
-<mapper namespace="com.example.first_spring.mapper.MainMapper">
+<mapper namespace="com.example.first_spring.mapper.EmpMapper">
 	<select id="getEmpList" resultType="EmpVO">
 	SELECT
 		empno,
@@ -13,6 +13,107 @@
 	SELECT
 		ename
 	FROM emp
-	WHERE empno = 7499
+	WHERE empno = #{empNo}
+	</select>
+	<select id="getName" resultType="EmpVO">
+	select
+		ename,
+		job
+	FROM emp
+	WHERE ename like "%L%L%"
+	</select>
+	<select id="getComm" resultType= "EmpVO">
+	SELECT
+		ename,
+		comm
+	FROM emp
+	WHERE comm is null
+	</select>
+	<select id="getHiredate" resultType="EmpVO">
+	<![CDATA[
+	SELECT
+		ename,
+		hiredate
+	FROM emp
+	WHERE hiredate >= date_format(HIREDATE,"1980-12-17") 
+	AND hiredate <= date_format(HIREDATE,"1982-01-23") 
+	]]>
+	</select>
+	<select id="selectEmpWhereJobAndSal" resultType = "EmpVO">
+	SELECT
+		*
+	FROM emp
+	<![CDATA[
+	WHERE
+	 	job = #{job}
+	and
+	 	sal >= #{sal}
+	]]>
+	</select>
+	
+	<!-- 문제0번 -->
+	<select id="getOverSal" resultType = "EmpVO">
+	<![CDATA[
+	select
+		ename,
+		sal
+	FROM emp
+	WHERE 
+	sal >= #{sal}
+	and
+	(deptno = 10
+	or
+	deptno = 30)
+	]]>
+	</select>
+	
+	<!-- 문제1번 -->
+	<select id="getMgrisNull" resultType = "EmpVO">
+	SELECT
+		ename,
+		job,
+		sal
+	FROM emp
+	WHERE
+	mgr is null
+	</select>
+	<!-- 문제2번 -->
+	
+	<select id="getHiredate1987" resultType = "EmpVO">
+	<![CDATA[
+	select 
+		ename,
+		job,
+		hiredate,
+		sal
+	from emp 
+	where
+	  #{year} = date_format(HIREDATE,'%Y') 
+	]]>
+	</select>
+	
+	<!-- 문제3번 -->
+	<select id="getMonthDec" resultType = "EmpVO">
+	<![CDATA[
+	SELECT
+		ename,
+		sal
+	FROM emp
+	WHERE
+		#{month} = date_format(HIREDATE,'%m')
+	]]>
+	</select>
+	
+	<!-- 문제4번 -->
+	<select id="getFirstHiredate" resultType = "EmpVO">
+	<![CDATA[
+	SELECT
+		empno,
+		ename,
+		sal
+	FROM emp
+	WHERE
+		job = #{job}
+	]]>
 	</select>
 </mapper>

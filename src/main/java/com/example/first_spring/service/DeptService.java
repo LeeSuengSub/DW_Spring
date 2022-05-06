@@ -14,7 +14,7 @@ public class DeptService {
 	@Autowired
 	private DeptMapper deptmapper;
 	
-	public DeptVO getDept(){
+	public List<DeptVO> getDept(){
 		return deptmapper.getDeptList();
 	}
 }

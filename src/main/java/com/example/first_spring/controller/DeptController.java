@@ -15,7 +15,7 @@ public class DeptController {
 		private DeptService deptservice;
 		
 		@GetMapping("/dept")
-		public DeptVO callDname(){
+		public List<DeptVO> callDname(){
 			return deptservice.getDept();
 		}
 }

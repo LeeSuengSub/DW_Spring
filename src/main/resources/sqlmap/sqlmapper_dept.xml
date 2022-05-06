@@ -5,6 +5,5 @@
 	SELECT
 		*
 	FROM dept
-	WHERE dname = "RESEARCH"
 	</select>
 </mapper>

@@ -8,7 +8,7 @@ import com.example.first_spring.VO.DeptVO;
 @Mapper
 public interface DeptMapper {
 	
-	public DeptVO getDeptList();
+	public List<DeptVO> getDeptList();
 	
 	
 }
