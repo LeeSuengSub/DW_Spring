@@ -57,7 +57,7 @@ public class EmpController {
 	}
 	//문제3번
 	@GetMapping("/emp/hiredate/month/{month}")
-	public List<EmpVO> callMonthDec(@PathVariable("month") String month){
+	public EmpVO callMonthDec(@PathVariable("month") String month){
 		return empservice.getMonthDec(month);
 	}
 	//문제4번

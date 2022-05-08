@@ -35,7 +35,7 @@ public interface EmpMapper {
 	//문제2번
 	public List<EmpVO> getHiredate1987(String year);
 	//문제3번
-	public List<EmpVO> getMonthDec(String month);
+	public EmpVO getMonthDec(String month);
 	//문제4번
 	public List<EmpVO> getFirstHiredate(String job);
 

@@ -1,5 +1,6 @@
 package com.example.first_spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,18 +58,8 @@ public class EmpService {
 	}
 	
 	//문제 3번
-	public List<EmpVO> getMonthDec(String month){
-		int max = 0;
-		int temp = 0;
-		for(int i=0; i<getAllempList().size();i++) {
-			int sal = getAllempList().get(i).getSal();
-			if(sal >= max) {
-				max = sal;
-				temp = i;
-				return empMapper.getMonthDec(month);
-			}
-		}
-		return null;
+	public EmpVO getMonthDec(String month){
+		return empMapper.getMonthDec(month);
 	}
 	
 	//문제4번
