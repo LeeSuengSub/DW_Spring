@@ -40,8 +40,10 @@ public class EmpController {
 	public List<EmpVO> callHiredate(){
 		return empservice.getHiredate();
 	}
+	//job이 manager이고, sal이 2500이상인 사람에게 comm 500주기
 	@GetMapping("/emp/job/{jobName}/sal/{sal}")
 	public List<EmpVO> callManager(@PathVariable("jobName") String job, @PathVariable("sal") int sal) {
+		
 		return empservice.getManager(job, sal);
 	}
 	//문제0번
@@ -98,6 +100,8 @@ public class EmpController {
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
+	
+	
 	
 	
 	

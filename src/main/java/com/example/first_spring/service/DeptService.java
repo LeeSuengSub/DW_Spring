@@ -17,4 +17,13 @@ public class DeptService {
 	public List<DeptVO> getDept(){
 		return deptmapper.getDeptList();
 	}
+	public int InsertDept(DeptVO deptvo) {
+		return deptmapper.InsertDept(deptvo);
+	}
+	public int DeleteDept(int deptno) {
+		return deptmapper.DeleteDept(deptno);
+	}
+	public int UpdateDept(DeptVO deptvo) {
+		return deptmapper.UpdateDept(deptvo);
+	}
 }

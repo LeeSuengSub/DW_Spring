@@ -46,5 +46,5 @@ public interface EmpMapper {
 	public int deleteEmp(int empno);
 	//데이터 수정
 	public int updateEmp(EmpVO empVO);
-
+	
 }

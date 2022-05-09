@@ -41,12 +41,15 @@
 	</select>
 	<select id="selectEmpWhereJobAndSal" resultType = "EmpVO">
 	SELECT
-		*
+		empno,
+		ename,
+		job,
+		comm
 	FROM emp
 	<![CDATA[
 	WHERE
 	 	job = #{job}
-	and
+	AND
 	 	sal >= #{sal}
 	]]>
 	</select>
@@ -156,4 +159,6 @@
 		comm = #{comm}
 	WHERE empno = #{empno}
 	</update>
+	
+
 </mapper>

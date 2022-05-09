@@ -1,5 +1,6 @@
 package com.example.first_spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.first_spring.VO.EmpVO;
-import com.example.first_spring.VO.UserVO;
 import com.example.first_spring.mapper.EmpMapper;
 
 @Service
@@ -31,11 +31,24 @@ public class EmpService {
 	public List<EmpVO> getHiredate(){
 		return empMapper.getHiredate();
 	}
+	@Transactional(rollbackFor = Exception.class)
 	public List<EmpVO> getManager(String job, int sal) {
-		if(job.equals("salesman")) {
-			return null;
+
+		List<EmpVO> list = empMapper.selectEmpWhereJobAndSal(job, sal);
+		int comm = 500; //커미션
+		int rows = 0;//몇행인지 체크
+		for(int i=0; i<list.size(); i++) {
+			int empComm = list.get(i).getComm();
+			int sum = empComm+comm;
+			
+			list.get(i).setComm(sum);
+			EmpVO vo = list.get(i);//rows에 대입하려고 
+			rows += empMapper.updateEmp(vo);//쿼리는 int로 반환함
 		}
-		return empMapper.selectEmpWhereJobAndSal(job, sal);
+		if(rows > 0) {
+			return empMapper.selectEmpWhereJobAndSal(job, sal);
+		}
+		return null;
 	}
 	
 	//문제0번

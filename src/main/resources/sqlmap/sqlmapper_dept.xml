@@ -6,4 +6,30 @@
 		*
 	FROM dept
 	</select>
+	
+	<insert id="InsertDept">
+	INSERT INTO dept
+	(
+		deptno,
+		dname
+	)
+	VALUES
+	(
+		#{deptno},
+		#{dname}
+	)
+	</insert>
+	
+	<delete id="DeleteDept">
+	DELETE FROM dept
+	WHERE deptno = #{deptno}
+	</delete>
+	
+	<update id="UpdateDept">
+	UPDATE dept
+	set
+		loc = #{loc}
+	WHERE
+		deptno = #{deptno}
+	</update>
 </mapper>

@@ -10,5 +10,9 @@ public interface DeptMapper {
 	
 	public List<DeptVO> getDeptList();
 	
+	public int InsertDept(DeptVO deptvo);
 	
+	public int DeleteDept(int deptno);
+	
+	public int UpdateDept(DeptVO deptvo);
 }
