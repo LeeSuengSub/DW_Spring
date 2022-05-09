@@ -38,5 +38,13 @@ public interface EmpMapper {
 	public EmpVO getMonthDec(String month);
 	//문제4번
 	public List<EmpVO> getFirstHiredate(String job);
+	//문제5번
+	public EmpVO getInfo(int empno);
+	//데이터 삽입
+	public int insertEmp(EmpVO empVO);
+	//데이터 삭제
+	public int deleteEmp(int empno);
+	//데이터 수정
+	public int updateEmp(EmpVO empVO);
 
 }

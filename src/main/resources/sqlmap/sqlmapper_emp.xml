@@ -116,4 +116,44 @@
 		job = #{job}
 	]]>
 	</select>
+	
+	<!-- 문제 5번 -->
+	<select id="getInfo" resultType = "EmpVO">
+	SELECT
+		*
+	FROM emp e
+	INNER JOIN dept d
+	ON e.deptno = d.deptno
+	WHERE empno = #{empno}
+	</select>
+	
+	<!-- Oracle은 Mybatis INSERT할 때 PK문법이 다르다.(시퀀스를 추가해야 함) -->
+	<insert id="insertEmp">
+	INSERT INTO emp
+	(
+		empno,
+		ename,
+		deptno,
+		hiredate
+	)
+	VALUES
+	(
+		#{empno},
+		#{ename},
+		#{deptno},
+		now()
+	)
+	</insert>
+	
+	<delete id="deleteEmp">
+		DELETE FROM emp
+		WHERE empno = #{empno}
+	</delete>
+	
+	<update id="updateEmp">
+	UPDATE emp
+	SET
+		comm = #{comm}
+	WHERE empno = #{empno}
+	</update>
 </mapper>

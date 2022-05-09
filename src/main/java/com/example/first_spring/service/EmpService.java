@@ -1,12 +1,13 @@
 package com.example.first_spring.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.first_spring.VO.EmpVO;
+import com.example.first_spring.VO.UserVO;
 import com.example.first_spring.mapper.EmpMapper;
 
 @Service
@@ -59,11 +60,50 @@ public class EmpService {
 	
 	//문제 3번
 	public EmpVO getMonthDec(String month){
+//		List<EmpVO> list = new ArrayList<EmpVO>();
+		int count =0;
+		count++;
+		int max = 0;
+		for(int i=0; i<count; i++) {
+			int sal = empMapper.getMonthDec(month).getSal();
+			if(sal > max) {
+				max = sal;
+					
+			}
+		}
 		return empMapper.getMonthDec(month);
 	}
 	
 	//문제4번
 	public List<EmpVO> getFirstHiredate(String job){
 		return empMapper.getFirstHiredate(job);
+	}
+	
+	//문제5번
+	public EmpVO getInfo(int empno) {
+		return empMapper.getInfo(empno);
+	}
+	@Transactional(rollbackFor = {Exception.class})
+	public int setEmp(EmpVO vo) {
+		int rows = empMapper.insertEmp(vo);//몇행 insert 되었는지 리턴
+		return rows;
+	}
+	@Transactional(rollbackFor = {Exception.class})
+	public int getEmpRemoveCount(int empno) {
+		int rows = empMapper.deleteEmp(empno);//몇행 delete 되었는지 리턴
+		return rows;
+	}
+	
+	//@Transactional(rollbackFor = {Exception.class}) : 에러나면 롤백해줘~
+	//Exception : 에러를 잡겠다.
+	@Transactional(rollbackFor = {Exception.class})
+	public int getEmpUpdateCount(EmpVO vo) {
+		int rows = empMapper.updateEmp(vo);//몇행 update되었는지 리턴
+		
+//		UserVO user = null;
+//		String name = user.getName();
+//		System.out.println(name);
+		
+		return rows;
 	}
 }
