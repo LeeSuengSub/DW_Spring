@@ -47,4 +47,7 @@ public interface EmpMapper {
 	//데이터 수정
 	public int updateEmp(EmpVO empVO);
 	
+	public EmpVO selectDeptNo();
+	
+	
 }

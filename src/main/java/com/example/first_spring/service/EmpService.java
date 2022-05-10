@@ -38,8 +38,8 @@ public class EmpService {
 		int comm = 500; //커미션
 		int rows = 0;//몇행인지 체크
 		for(int i=0; i<list.size(); i++) {
-			int empComm = list.get(i).getComm();
-			int sum = empComm+comm;
+			int empComm = list.get(i).getComm();//초기값은 null이므로 0
+			int sum = empComm+comm;//0+500
 			
 			list.get(i).setComm(sum);
 			EmpVO vo = list.get(i);//rows에 대입하려고 
@@ -98,11 +98,20 @@ public class EmpService {
 	}
 	@Transactional(rollbackFor = {Exception.class})
 	public int setEmp(EmpVO vo) {
+		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
+		EmpVO empVO = empMapper.selectDeptNo();
+		int deptNo = empVO.getDeptno();
+		vo.setDeptno(deptNo);
+		
+		//1.insert 해야 함
 		int rows = empMapper.insertEmp(vo);//몇행 insert 되었는지 리턴
 		return rows;
 	}
 	@Transactional(rollbackFor = {Exception.class})
 	public int getEmpRemoveCount(int empno) {
+		//급여가 3000인 사람만 삭제
+		//1. 급여 3000이상인 쿼리 작성
+		//2. mapper 메소드 작성(리턴타입은 쿼리결과에 따라)
 		int rows = empMapper.deleteEmp(empno);//몇행 delete 되었는지 리턴
 		return rows;
 	}
@@ -119,4 +128,26 @@ public class EmpService {
 		
 		return rows;
 	}
+
+	public int getEmpSalRemove(int empno) {
+		List<EmpVO> list = empMapper.getEmpList();
+//		for문 돌려서 해당 vo의 empno가 파라미터와 같은지 , 그리고 sal이 3천보다 작은지 확인하는 if문
+		for(int i=0; i<list.size(); i++) {
+			EmpVO vo = list.get(i);
+		if(list.get(i).getEmpno() == empno && list.get(i).getSal()<3000) {
+			return 0;
+		}
+	}
+		return empMapper.insertEmp(null);
+	}
+	
+	public int getEmpDeptno(EmpVO empvo) {
+		EmpVO empVO = empMapper.selectDeptNo();
+		int deptNo = empVO.getDeptno();
+		empvo.setDeptno(deptNo);
+		
+		int rows = empMapper.insertEmp(empvo);
+		return rows;
+	}
+	
 }

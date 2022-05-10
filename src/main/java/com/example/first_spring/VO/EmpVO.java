@@ -11,5 +11,4 @@ public class EmpVO extends DeptVO{
 	private String hiredate;
 	private int sal;
 	private int comm;
-	private int deptno;
 }

@@ -143,7 +143,13 @@
 	(
 		#{empno},
 		#{ename},
-		#{deptno},
+		(select 
+			d.DEPTNO 
+			from emp e 
+			right join dept d 
+			on e.DEPTNO = d.DEPTNO 
+			where e.DEPTNO is null
+		),
 		now()
 	)
 	</insert>
@@ -156,9 +162,18 @@
 	<update id="updateEmp">
 	UPDATE emp
 	SET
-		comm = #{comm}
+		sal = #{sal}
 	WHERE empno = #{empno}
 	</update>
 	
+	<!-- 1. Integer,String 2.VO  처음에는 크게 잡는다.-->
+	<select id="selectDeptNo" resultType="EmpVO">
+		SELECT 
+			d.DEPTNO 
+		FROM emp as e
+		RIGHT JOIN dept as d 
+		ON e.DEPTNO = d.DEPTNO 
+		WHERE e.EMPNO  is null 
+	</select>
 
 </mapper>

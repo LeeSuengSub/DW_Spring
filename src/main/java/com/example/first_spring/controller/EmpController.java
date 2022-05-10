@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.first_spring.VO.EmpVO;
@@ -100,10 +101,30 @@ public class EmpController {
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
+	//쿼리스트링으로 GetMapping
+	//검색할때 많이 사용
+	//tier?region=kr
+	//Ex1
+	@GetMapping("/tier")
+	public String calltier(@RequestParam("region") String region, @RequestParam("name")String name) {
+		return region+", "+name;
+	}
 	
+	//board?page=1&pageSize=10&writer=현상원
+	@GetMapping("/board")
+	public int callBoard(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize,
+			@RequestParam("writer") String writer) {
+		System.out.println("현재 페이지는 "+page);
+		System.out.println("한 페이지에 보여주는 rows "+ pageSize);
+		System.out.println("작성자는 "+writer);
+		return 0;
+	}
 	
-	
-	
+	//문제1번.
+	@PostMapping("/emp/deptno")
+	public int callEmpDeptno(@RequestBody EmpVO empvo) {
+		return empservice.getEmpDeptno(empvo);
+	}
 	
 	
 }
