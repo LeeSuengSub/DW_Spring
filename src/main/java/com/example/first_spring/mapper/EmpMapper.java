@@ -46,9 +46,8 @@ public interface EmpMapper {
 	public int deleteEmp(int empno);
 	//데이터 수정
 	public int updateEmp(EmpVO empVO);
-	//1번문제 풀이 1
-	public EmpVO findDeptno();
-	//1번문제 풀이 2
+	//1번문제 풀이
+	public int allEmp(EmpVO empVO);
 	public EmpVO selectDeptno();
 	//2번문제
 	public int RemoveSal(int empno);

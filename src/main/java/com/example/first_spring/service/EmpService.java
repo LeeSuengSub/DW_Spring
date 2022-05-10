@@ -99,9 +99,9 @@ public class EmpService {
 	@Transactional(rollbackFor = {Exception.class})
 	public int setEmp(EmpVO vo) {
 		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
-		EmpVO empVO = empMapper.findDeptno();
-		int deptNo = empVO.getDeptno();
-		vo.setDeptno(deptNo);
+//		EmpVO empVO = empMapper.insertEmp();
+//		int deptNo = empVO.getDeptno();
+//		vo.setDeptno(deptNo);
 		
 		//1.insert 해야 함
 		int rows = empMapper.insertEmp(vo);//몇행 insert 되었는지 리턴
@@ -140,27 +140,28 @@ public class EmpService {
 	}
 		return empMapper.insertEmp(null);
 	}
-	
-	public int getEmpDeptno(EmpVO empvo) {
-		EmpVO empVO = empMapper.findDeptno();
-		int deptNo = empVO.getDeptno();
-		empvo.setDeptno(deptNo);
+	//문제 1번
+	public int getEmpDeptno(EmpVO empVO) {
+		EmpVO vo = empMapper.selectDeptno();
+		int deptNo = vo.getDeptno();
+		empVO.setDeptno(deptNo);
 		
-		int rows = empMapper.insertEmp(empvo);
+		int rows = empMapper.allEmp(empVO);
 		return rows;
 	}
-	
+	//문제 2번
 	public int EmpSalRemove(int empno) {
 		List<EmpVO> list = empMapper.getEmpList();
 		for(int i=0; i<list.size();i++) {
 			EmpVO vo = list.get(i);
-			if(vo.getEmpno() == empno && vo.getSal() > 3000) {
+			if(vo.getEmpno() == empno && vo.getSal() < 3000) {
 				return 0;
 			}
 		}
 		int rows = empMapper.RemoveSal(empno);
 		return rows;
 	}
+	//문제 3번
 	public int getCountName(String search) {
 		List<EmpVO> list = empMapper.CountName(search);
 		int count =0;

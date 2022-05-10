@@ -83,7 +83,7 @@ public class EmpController {
 	//대표적인 EX) 회원가입
 	//@RequestBody가 파라미터로 넘어오는 VO를 대신 new해줌
 	//null로 나타나면 오타 확인.
-	@PostMapping("/emp")
+	@PostMapping("/emp") // 해결 완료
 	public int callEmpSet(@RequestBody EmpVO empVO) {
 		System.out.println("사원 번호는 "+empVO.getEmpno());
 		System.out.println("사원 이름은 "+empVO.getEname());
@@ -93,12 +93,12 @@ public class EmpController {
 		return empservice.setEmp(empVO);
 	}
 	//@DeleteMapping : 자원 삭제할 때 사용.
-	@DeleteMapping("/emp/empno/{empno}")
+	@DeleteMapping("/emp/empno/{empno}") // 해결 완료
 	public int callEmpRemove(@PathVariable("empno") int empno) {
 		return empservice.getEmpRemoveCount(empno);
 	}
 	
-	@PatchMapping("/emp")
+	@PatchMapping("/emp") // 확인 완료
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
@@ -122,12 +122,12 @@ public class EmpController {
 	}
 	
 	//문제1번.
-	@PostMapping("/emp/deptno")
-	public int callEmpDeptno(@RequestBody EmpVO empvo) {
-		return empservice.getEmpDeptno(empvo);
+	@PostMapping("/emp/deptno") // 확인 완료
+	public int callEmpDeptno(@RequestBody EmpVO empVO) {
+		return empservice.getEmpDeptno(empVO);
 	}
 	//문제2번
-	@DeleteMapping("/emp/empNo/{empno}")
+	@DeleteMapping("/emp/emp/{empno}") // 확인 완료
 	public int callEmpSalremove(@PathVariable("empno") int empno) {
 		return empservice.EmpSalRemove(empno);
 	}

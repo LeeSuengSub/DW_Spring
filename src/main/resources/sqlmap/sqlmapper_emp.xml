@@ -131,7 +131,7 @@
 	</select>
 	
 	<!-- Oracle은 Mybatis INSERT할 때 PK문법이 다르다.(시퀀스를 추가해야 함) -->
-	<insert id="findDeptno">
+	<insert id="insertEmp">
 	INSERT INTO emp
 	(
 		empno,
@@ -143,7 +143,7 @@
 	(
 		#{empno},
 		#{ename},
-		#{deptno}
+		#{deptno},
 		now()
 	)
 	</insert>
@@ -170,7 +170,7 @@
 		WHERE e.EMPNO  is null 
 	</select>
 	<!-- 이중 쿼리를 이용한 방법 -->
-	<insert id="insertEmp">
+	<insert id="allEmp">
 	INSERT INTO emp
 	(
 		empno,
