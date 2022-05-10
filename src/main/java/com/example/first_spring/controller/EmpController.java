@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.example.first_spring.VO.EmpVO;
 import com.example.first_spring.service.EmpService;
@@ -125,6 +126,16 @@ public class EmpController {
 	public int callEmpDeptno(@RequestBody EmpVO empvo) {
 		return empservice.getEmpDeptno(empvo);
 	}
-	
+	//문제2번
+	@DeleteMapping("/emp/empNo/{empno}")
+	public int callEmpSalremove(@PathVariable("empno") int empno) {
+		return empservice.EmpSalRemove(empno);
+	}
+	//문제3번
+	///emp/name?search=A
+	@GetMapping("/emp/name/name")
+	public int callEmpName(@RequestParam("search") String search) {
+		return empservice.getCountName(search);
+	}
 	
 }

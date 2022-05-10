@@ -131,6 +131,45 @@
 	</select>
 	
 	<!-- Oracle은 Mybatis INSERT할 때 PK문법이 다르다.(시퀀스를 추가해야 함) -->
+	<insert id="findDeptno">
+	INSERT INTO emp
+	(
+		empno,
+		ename,
+		deptno,
+		hiredate
+	)
+	VALUES
+	(
+		#{empno},
+		#{ename},
+		#{deptno}
+		now()
+	)
+	</insert>
+	
+	<delete id="deleteEmp">
+		DELETE FROM emp
+		WHERE empno = #{empno}
+	</delete>
+	
+	<update id="updateEmp">
+	UPDATE emp
+	SET
+		sal = #{sal}
+	WHERE empno = #{empno}
+	</update>
+	
+	<!-- 1. Integer,String 2.VO  처음에는 크게 잡는다.-->
+	<select id="selectDeptno" resultType="EmpVO">
+		SELECT 
+			d.DEPTNO 
+		FROM emp as e
+		RIGHT JOIN dept as d 
+		ON e.DEPTNO = d.DEPTNO 
+		WHERE e.EMPNO  is null 
+	</select>
+	<!-- 이중 쿼리를 이용한 방법 -->
 	<insert id="insertEmp">
 	INSERT INTO emp
 	(
@@ -153,27 +192,18 @@
 		now()
 	)
 	</insert>
-	
-	<delete id="deleteEmp">
-		DELETE FROM emp
-		WHERE empno = #{empno}
+
+	<delete id="RemoveSal">
+	DELETE FROM emp
+	WHERE empno = #{empno}
 	</delete>
 	
-	<update id="updateEmp">
-	UPDATE emp
-	SET
-		sal = #{sal}
-	WHERE empno = #{empno}
-	</update>
+	<select id="CountName" resultType="EmpVO">
+	select
+		*
+	From emp
+	where
+		ename like CONCAT(#{search},'%')
 	
-	<!-- 1. Integer,String 2.VO  처음에는 크게 잡는다.-->
-	<select id="selectDeptNo" resultType="EmpVO">
-		SELECT 
-			d.DEPTNO 
-		FROM emp as e
-		RIGHT JOIN dept as d 
-		ON e.DEPTNO = d.DEPTNO 
-		WHERE e.EMPNO  is null 
 	</select>
-
 </mapper>

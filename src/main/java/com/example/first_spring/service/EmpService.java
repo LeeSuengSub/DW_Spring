@@ -99,7 +99,7 @@ public class EmpService {
 	@Transactional(rollbackFor = {Exception.class})
 	public int setEmp(EmpVO vo) {
 		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
-		EmpVO empVO = empMapper.selectDeptNo();
+		EmpVO empVO = empMapper.findDeptno();
 		int deptNo = empVO.getDeptno();
 		vo.setDeptno(deptNo);
 		
@@ -142,12 +142,33 @@ public class EmpService {
 	}
 	
 	public int getEmpDeptno(EmpVO empvo) {
-		EmpVO empVO = empMapper.selectDeptNo();
+		EmpVO empVO = empMapper.findDeptno();
 		int deptNo = empVO.getDeptno();
 		empvo.setDeptno(deptNo);
 		
 		int rows = empMapper.insertEmp(empvo);
 		return rows;
+	}
+	
+	public int EmpSalRemove(int empno) {
+		List<EmpVO> list = empMapper.getEmpList();
+		for(int i=0; i<list.size();i++) {
+			EmpVO vo = list.get(i);
+			if(vo.getEmpno() == empno && vo.getSal() > 3000) {
+				return 0;
+			}
+		}
+		int rows = empMapper.RemoveSal(empno);
+		return rows;
+	}
+	public int getCountName(String search) {
+		List<EmpVO> list = empMapper.CountName(search);
+		int count =0;
+		for(int i=0; i<list.size();i++) {
+			EmpVO vo = list.get(i);
+				count++;
+			}
+		return count;
 	}
 	
 }

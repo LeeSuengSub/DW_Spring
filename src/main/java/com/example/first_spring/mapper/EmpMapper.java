@@ -46,8 +46,13 @@ public interface EmpMapper {
 	public int deleteEmp(int empno);
 	//데이터 수정
 	public int updateEmp(EmpVO empVO);
-	
-	public EmpVO selectDeptNo();
-	
+	//1번문제 풀이 1
+	public EmpVO findDeptno();
+	//1번문제 풀이 2
+	public EmpVO selectDeptno();
+	//2번문제
+	public int RemoveSal(int empno);
+	//3번문제
+	public List<EmpVO> CountName(String search);
 	
 }
