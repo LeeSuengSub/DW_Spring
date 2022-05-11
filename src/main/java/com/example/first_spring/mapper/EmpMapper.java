@@ -60,5 +60,7 @@ public interface EmpMapper {
 	//문제 2번
 	public EmpVO selectEmpCommSal(@Param("empno") int empno);
 	public int updateEmpSal(EmpVO vo);
-	
+	//TEST
+	public int TestEmpSalJob(EmpVO empVO);
+	public EmpVO TestSelectEmpComm(@Param("empno") int empno);
 }

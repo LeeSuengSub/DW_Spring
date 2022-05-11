@@ -154,6 +154,15 @@ public class EmpController {
 	public int callEmpSalUpdate(@PathVariable("empno") int empno) {
 		return empservice.getEmpUpdateSalCount(empno);
 	}
+	//Test
+	@PatchMapping("/emp/emp/empno/{empno}")
+	public int TestEmpSalJob(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
+		return empservice.TestEmpSalJob(empVO, empno);
+	}
+	@PatchMapping("/emp/empno/empno/{empno}")
+	public int TestEmpComm(@PathVariable("empno")int empno) {
+		return empservice.TestEmpComm(empno);
+	}
 	
 	
 }

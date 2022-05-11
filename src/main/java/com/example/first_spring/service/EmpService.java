@@ -189,9 +189,24 @@ public class EmpService {
 			vo.setSal(sal+bonus);
 			//update로직 추가
 			return empMapper.updateEmpSal(vo);
-			
 		}
-		
+		return 0;
+	}
+	//Test
+	public int TestEmpSalJob(EmpVO empVO, int empno) {
+		empVO.setEmpno(empno);
+		return empMapper.TestEmpSalJob(empVO);
+	}
+	public int TestEmpComm(int empno) {
+		EmpVO vo = empMapper.TestSelectEmpComm(empno);
+		int comm = vo.getComm();
+		if(comm == 0) {
+			int sal = vo.getSal();
+			int bonus = 500;
+			int sum = sal+bonus;
+			vo.setSal(sum);
+			return empMapper.updateEmpSal(vo);
+		}
 		return 0;
 	}
 }

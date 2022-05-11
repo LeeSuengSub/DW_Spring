@@ -223,7 +223,8 @@
 	</select>
 	
 	<!-- 문제 1번 -->
-	<update id="updateEmpJobSal">
+	<!-- id 수정할것 -->
+	<update id="TestEmpSalJob">
 	UPDATE emp
 	SET
 		job = #{job},
@@ -233,7 +234,7 @@
 	</update>
 	
 	<!-- 문제 2번 -->
-	<select id="selectEmpCommSal" resultType = "EmpVO">
+	<select id="TestSelectEmpComm" resultType = "EmpVO">
 	SELECT
 		empno,
 		comm,
