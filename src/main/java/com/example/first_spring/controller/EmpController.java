@@ -83,7 +83,7 @@ public class EmpController {
 	//대표적인 EX) 회원가입
 	//@RequestBody가 파라미터로 넘어오는 VO를 대신 new해줌
 	//null로 나타나면 오타 확인.
-	@PostMapping("/emp") // 해결 완료
+	@PostMapping("/emp")
 	public int callEmpSet(@RequestBody EmpVO empVO) {
 		System.out.println("사원 번호는 "+empVO.getEmpno());
 		System.out.println("사원 이름은 "+empVO.getEname());
@@ -93,12 +93,12 @@ public class EmpController {
 		return empservice.setEmp(empVO);
 	}
 	//@DeleteMapping : 자원 삭제할 때 사용.
-	@DeleteMapping("/emp/empno/{empno}") // 해결 완료
+	@DeleteMapping("/emp/empno/{empno}")
 	public int callEmpRemove(@PathVariable("empno") int empno) {
 		return empservice.getEmpRemoveCount(empno);
 	}
 	
-	@PatchMapping("/emp") // 확인 완료
+	@PatchMapping("/emp")
 	public int callEmpUpdate(@RequestBody EmpVO empVO) {
 		return empservice.getEmpUpdateCount(empVO);
 	}
@@ -122,12 +122,12 @@ public class EmpController {
 	}
 	
 	//문제1번.
-	@PostMapping("/emp/deptno") // 확인 완료
+	@PostMapping("/emp/deptno")
 	public int callEmpDeptno(@RequestBody EmpVO empVO) {
 		return empservice.getEmpDeptno(empVO);
 	}
 	//문제2번
-	@DeleteMapping("/emp/emp/{empno}") // 확인 완료
+	@DeleteMapping("/emp/emp/{empno}")
 	public int callEmpSalremove(@PathVariable("empno") int empno) {
 		return empservice.EmpSalRemove(empno);
 	}
@@ -137,5 +137,23 @@ public class EmpController {
 	public int callEmpName(@RequestParam("search") String search) {
 		return empservice.getCountName(search);
 	}
+
+	@GetMapping("/emp/mgr/{isMgr}")
+	public List<EmpVO> callEmpIsMgrList(@PathVariable("isMgr") String isMgr){
+		return empservice.getEmpIsMgrList(isMgr);
+	}
+	//문제1. 사원번호가 7902번인 사원 job을 salesman, sal을 3500으로 수정하시오.(update -> Patch)
+	//선생님 답안
+	@PatchMapping("/emp/{empno}")
+	public int callEmpSalUpdate(@PathVariable("empno") int empno, @RequestBody EmpVO empVO) {
+		return empservice.updateEmpJobSal(empVO, empno);
+	}
+	//문제2. 사원번호가 7844번인 사원의 comm이 0이거나 null이면 기존 급여에서 500를 추가(수정)하시오. (update -> Patch)
+	//ex) 3000 -> 3500
+	@PatchMapping("/emp/empno/{empno}")
+	public int callEmpSalUpdate(@PathVariable("empno") int empno) {
+		return empservice.getEmpUpdateSalCount(empno);
+	}
+	
 	
 }

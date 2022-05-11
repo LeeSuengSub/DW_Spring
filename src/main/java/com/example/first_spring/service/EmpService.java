@@ -121,11 +121,6 @@ public class EmpService {
 	@Transactional(rollbackFor = {Exception.class})
 	public int getEmpUpdateCount(EmpVO vo) {
 		int rows = empMapper.updateEmp(vo);//몇행 update되었는지 리턴
-		
-//		UserVO user = null;
-//		String name = user.getName();
-//		System.out.println(name);
-		
 		return rows;
 	}
 
@@ -166,10 +161,37 @@ public class EmpService {
 		List<EmpVO> list = empMapper.CountName(search);
 		int count =0;
 		for(int i=0; i<list.size();i++) {
-			EmpVO vo = list.get(i);
 				count++;
 			}
 		return count;
 	}
-	
+	// mybatis-if문
+	public List<EmpVO> getEmpIsMgrList(String isMgr){
+		return empMapper.selectEmpMgr(isMgr);
+	}
+	//문제 1번
+	public int updateEmpJobSal(EmpVO vo, int empno){
+		vo.setEmpno(empno);
+		return empMapper.updateEmpJobSal(vo);
+	}
+	//문제 2번
+	@Transactional(rollbackFor = {Exception.class})
+	public int getEmpUpdateSalCount(int empno) {
+		
+		//Comm이 0이거나 NULL 이면
+		EmpVO vo = empMapper.selectEmpCommSal(empno);
+		
+		int comm = vo.getComm();
+		
+		if(comm == 0) {
+			int bonus = 500;
+			int sal = vo.getSal();
+			vo.setSal(sal+bonus);
+			//update로직 추가
+			return empMapper.updateEmpSal(vo);
+			
+		}
+		
+		return 0;
+	}
 }

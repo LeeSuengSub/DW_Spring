@@ -53,5 +53,12 @@ public interface EmpMapper {
 	public int RemoveSal(int empno);
 	//3번문제
 	public List<EmpVO> CountName(String search);
+	//mybatis-if문
+	public List<EmpVO> selectEmpMgr(@Param("isMgr") String isMgr);
+	//문제 1번
+	public int updateEmpJobSal(EmpVO vo);
+	//문제 2번
+	public EmpVO selectEmpCommSal(@Param("empno") int empno);
+	public int updateEmpSal(EmpVO vo);
 	
 }
