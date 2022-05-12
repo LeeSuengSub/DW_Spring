@@ -93,17 +93,19 @@ public class EmpService {
 	public List<EmpVO> getFirstHiredate(String job){
 		List<EmpVO> list = empMapper.getFirstHiredate(job);
 		int min = 0;
+		String temp = list.get(0).getHiredate().replace("-", "");
+		int date2 = Integer.parseInt(temp);
 		for(int i=0; i<list.size();i++) {
 			String hiredate = list.get(i).getHiredate().replace("-", "");
 			int date = Integer.parseInt(hiredate);
-			String hiredate2 = list.get(0).getHiredate().replace("-", "");
-			int date2 = Integer.parseInt(hiredate2);
 			min = date2;
-			if(date2>date) {
-				list.remove(i);
-				i--;
+			if(min>date) {
 				min = date;
 				}
+			if(i>0) {
+			list.remove(i);
+			i--;
+			}
 		}
 		return list;
 	}
