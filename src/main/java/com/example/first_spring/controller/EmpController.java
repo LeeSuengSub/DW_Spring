@@ -1,6 +1,7 @@
 package com.example.first_spring.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
 
 import com.example.first_spring.VO.EmpVO;
 import com.example.first_spring.service.EmpService;
@@ -65,7 +65,7 @@ public class EmpController {
 	}
 	//문제3번
 	@GetMapping("/emp/hiredate/month/{month}")
-	public EmpVO callMonthDec(@PathVariable("month") String month){
+	public List<EmpVO> callMonthDec(@PathVariable("month") String month){
 		return empservice.getMonthDec(month);
 	}
 	//문제4번
@@ -155,14 +155,37 @@ public class EmpController {
 		return empservice.getEmpUpdateSalCount(empno);
 	}
 	//Test
-	@PatchMapping("/emp/emp/empno/{empno}")
-	public int TestEmpSalJob(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
-		return empservice.TestEmpSalJob(empVO, empno);
+	//문제1) dept와 연결된 emp에서 없는 부서번호를 찾아서 사원이 새로 insert 될 때 그 부서번호로 insert되게 만들기
+	@PostMapping("/test/deptno")
+	public int TestDeptno(@RequestBody EmpVO empVO) {
+		return empservice.TestDeptno(empVO);
 	}
-	@PatchMapping("/emp/empno/empno/{empno}")
-	public int TestEmpComm(@PathVariable("empno")int empno) {
+	//문제2) 급여가 3000 이상이면 해고(3000이 안 되는 사원은 return 0)
+	@DeleteMapping("/test/emp/{empno}")
+	public int TestDelete(@PathVariable("empno") int empno) {
+		return empservice.TestDelete(empno);
+	}
+	//문제3) 쿼리스트링으로 이름이 A로 시작하는 사람수(Count) 구하기
+	@GetMapping("/test/emp/count")
+	public int TestCount(@RequestParam("find")String find) {
+		return empservice.getCountName(find);
+	}
+	@PatchMapping("/test/emp/empno/{empno}")
+	public int TestEmpJobSal(@PathVariable("empno") int empno, @RequestBody EmpVO empVO) {
+		return empservice.TestEmpJobSal(empno, empVO);
+	}
+	@PatchMapping("/test/emp/emp/{empno}")
+	public int TestEmpComm(@PathVariable("empno") int empno) {
 		return empservice.TestEmpComm(empno);
 	}
-	
-	
+	//Map
+	@GetMapping("/emp/map/list")
+	public List<Map<String,Object>> callEmpMapList(){
+		return empservice.getEmpMapList();
+	}
+	//MapTest
+	@GetMapping("/emp/map-list")
+	public List<Map<Object,Object>> TestEmpList(){
+		return empservice.TestEmpMap();
+	}
 }

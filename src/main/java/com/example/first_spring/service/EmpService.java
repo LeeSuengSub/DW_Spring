@@ -2,6 +2,7 @@ package com.example.first_spring.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,24 +73,39 @@ public class EmpService {
 	}
 	
 	//문제 3번
-	public EmpVO getMonthDec(String month){
-//		List<EmpVO> list = new ArrayList<EmpVO>();
-		int count =0;
-		count++;
+	public List<EmpVO> getMonthDec(String month){
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		list = empMapper.getMonthDec(month);
 		int max = 0;
-		for(int i=0; i<count; i++) {
-			int sal = empMapper.getMonthDec(month).getSal();
-			if(sal > max) {
-				max = sal;
-					
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getSal() > max) {
+				max = list.get(i).getSal();
+			}
+			if(i>0) {
+				list.remove(i-1);
+				i--;
 			}
 		}
-		return empMapper.getMonthDec(month);
+		return list;
 	}
 	
 	//문제4번
 	public List<EmpVO> getFirstHiredate(String job){
-		return empMapper.getFirstHiredate(job);
+		List<EmpVO> list = empMapper.getFirstHiredate(job);
+		int min = 0;
+		for(int i=0; i<list.size();i++) {
+			String hiredate = list.get(i).getHiredate().replace("-", "");
+			int date = Integer.parseInt(hiredate);
+			String hiredate2 = list.get(0).getHiredate().replace("-", "");
+			int date2 = Integer.parseInt(hiredate2);
+			min = date2;
+			if(date2>date) {
+				list.remove(i);
+				i--;
+				min = date;
+				}
+		}
+		return list;
 	}
 	
 	//문제5번
@@ -193,20 +209,54 @@ public class EmpService {
 		return 0;
 	}
 	//Test
-	public int TestEmpSalJob(EmpVO empVO, int empno) {
+	public int TestDeptno(EmpVO empVO) {
+		EmpVO vo = empMapper.selectDeptno();
+		int deptno = vo.getDeptno();
+		empVO.setDeptno(deptno);
+		int rows = empMapper.allEmp(empVO);
+		return rows;
+	}
+	public int TestDelete(int empno) {
+		List<EmpVO> list = empMapper.getEmpList();
+		for(int i=0; i<list.size(); i++) {
+			EmpVO vo = list.get(i);
+			if(vo.getEmpno() == empno & vo.getSal() < 3000) {
+				return 0;
+			}
+		}
+		int rows = empMapper.RemoveSal(empno);
+		return rows;
+	}
+	public int TestCount(String find) {
+		List<EmpVO> list = empMapper.CountName(find);
+		int count = 0;
+		for(int i=0; i<list.size(); i++) {
+			++count;
+		}
+		return count;
+	}
+	public int TestEmpJobSal(int empno, EmpVO empVO) {
 		empVO.setEmpno(empno);
 		return empMapper.TestEmpSalJob(empVO);
 	}
 	public int TestEmpComm(int empno) {
 		EmpVO vo = empMapper.TestSelectEmpComm(empno);
 		int comm = vo.getComm();
-		if(comm == 0) {
-			int sal = vo.getSal();
+		if(comm ==0) {
 			int bonus = 500;
-			int sum = sal+bonus;
+			int sal = vo.getSal();
+			int sum = bonus+sal;
 			vo.setSal(sum);
 			return empMapper.updateEmpSal(vo);
 		}
 		return 0;
+	}
+	//Map
+	public List<Map<String,Object>> getEmpMapList(){
+		return empMapper.selectEmpMapList();
+	}
+	//MapTest
+	public List<Map<Object,Object>> TestEmpMap(){
+		return empMapper.TestEmpMap();
 	}
 }

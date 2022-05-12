@@ -111,11 +111,16 @@
 	SELECT
 		empno,
 		ename,
-		sal
+		sal,
+		hiredate
 	FROM emp
 	WHERE
 		job = #{job}
+	
+	
 	]]>
+	<!-- ORDER BY hiredate asc
+	LIMIT 1; -->
 	</select>
 	
 	<!-- 문제 5번 -->
@@ -224,7 +229,7 @@
 	
 	<!-- 문제 1번 -->
 	<!-- id 수정할것 -->
-	<update id="TestEmpSalJob">
+	<update id="updateEmpJobSal">
 	UPDATE emp
 	SET
 		job = #{job},
@@ -234,7 +239,7 @@
 	</update>
 	
 	<!-- 문제 2번 -->
-	<select id="TestSelectEmpComm" resultType = "EmpVO">
+	<select id="selectEmpCommSal" resultType = "EmpVO">
 	SELECT
 		empno,
 		comm,
@@ -253,8 +258,30 @@
 		empno = #{empno}
 	</update>
 		
-	
-	
+	<select id="selectEmpMapList" resultType = "map">
+	SELECT
+		empno AS 사원번호,
+		ename,
+		job,
+		sal AS 급여,
+		e.deptno AS 부서번호,
+		d.deptno,
+		d.dname,
+		d.loc AS 근무지
+	FROM emp AS e
+	INNER JOIN dept AS d
+	ON e.deptno = d.deptno
+	</select>
+	<select id="TestEmpMap" resultType = "Map">
+	SELECT
+		empno as 사원번호,
+		ename as 사원이름,
+		job,
+		sal,
+		hiredate,
+		deptno
+	FROM emp
+	</select>
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.example.first_spring.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,7 +36,7 @@ public interface EmpMapper {
 	//문제2번
 	public List<EmpVO> getHiredate1987(String year);
 	//문제3번
-	public EmpVO getMonthDec(String month);
+	public List<EmpVO> getMonthDec(String month);
 	//문제4번
 	public List<EmpVO> getFirstHiredate(String job);
 	//문제5번
@@ -61,6 +62,10 @@ public interface EmpMapper {
 	public EmpVO selectEmpCommSal(@Param("empno") int empno);
 	public int updateEmpSal(EmpVO vo);
 	//TEST
-	public int TestEmpSalJob(EmpVO empVO);
-	public EmpVO TestSelectEmpComm(@Param("empno") int empno);
+	public int TestEmpSalJob(EmpVO empVO);//1번 문제
+	public EmpVO TestSelectEmpComm(@Param("empno") int empno);//2번문제
+	//map
+	public List<Map<String,Object>> selectEmpMapList();
+	//TESTMap
+	public List<Map<Object,Object>> TestEmpMap();
 }
