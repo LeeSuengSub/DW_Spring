@@ -140,14 +140,16 @@
 		empno,
 		ename,
 		deptno,
-		hiredate
+		hiredate,
+		job
 	)
 	VALUES
 	(
 		#{empno},
 		#{ename},
 		#{deptno},
-		now()
+		now(),
+		#{job}
 	)
 	</insert>
 	
@@ -272,18 +274,28 @@
 	INNER JOIN dept AS d
 	ON e.deptno = d.deptno
 	</select>
-	<select id="TestEmpMap" resultType = "Map">
+
+	<select id="TestMapList" resultType = "Map">
 	SELECT
-		empno as 사원번호,
-		ename as 사원이름,
-		job,
-		sal,
-		hiredate,
+		ename,
+		empno,
+		job AS 직업,
+		sal AS 월급,
+		hiredate AS 입사날짜,
+		mgr AS 사수번호,
 		deptno
 	FROM emp
 	</select>
 	
-	
+	<!-- HTML 사원 수정하기 -->
+	<update id="apiUpdate">
+	UPDATE emp
+	SET
+		job = #{job},
+		sal = #{sal}
+	WHERE
+		empno = #{empno}
+	</update>
 	
 	
 	

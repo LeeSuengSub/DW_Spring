@@ -67,5 +67,7 @@ public interface EmpMapper {
 	//map
 	public List<Map<String,Object>> selectEmpMapList();
 	//TESTMap
-	public List<Map<Object,Object>> TestEmpMap();
+	public List<Map<String,Object>> TestMapList();
+	//HTML에서 사원 업데이트하기
+	public int apiUpdate(EmpVO empVO);
 }

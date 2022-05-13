@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +22,7 @@ public class EmpController {
 	@Autowired
 	private EmpService empservice;
 	
+	@CrossOrigin(origins = {"*"})
 	@GetMapping("/emp")
 	public List<EmpVO> callEmpList(){
 		return empservice.getAllempList();
@@ -83,6 +85,7 @@ public class EmpController {
 	//대표적인 EX) 회원가입
 	//@RequestBody가 파라미터로 넘어오는 VO를 대신 new해줌
 	//null로 나타나면 오타 확인.
+	@CrossOrigin(origins = {"*"})
 	@PostMapping("/emp")
 	public int callEmpSet(@RequestBody EmpVO empVO) {
 		System.out.println("사원 번호는 "+empVO.getEmpno());
@@ -93,6 +96,7 @@ public class EmpController {
 		return empservice.setEmp(empVO);
 	}
 	//@DeleteMapping : 자원 삭제할 때 사용.
+	@CrossOrigin(origins = {"*"})
 	@DeleteMapping("/emp/empno/{empno}")
 	public int callEmpRemove(@PathVariable("empno") int empno) {
 		return empservice.getEmpRemoveCount(empno);
@@ -144,6 +148,7 @@ public class EmpController {
 	}
 	//문제1. 사원번호가 7902번인 사원 job을 salesman, sal을 3500으로 수정하시오.(update -> Patch)
 	//선생님 답안
+	@CrossOrigin(origins = {"*"})
 	@PatchMapping("/emp/{empno}")
 	public int callEmpSalUpdate(@PathVariable("empno") int empno, @RequestBody EmpVO empVO) {
 		return empservice.updateEmpJobSal(empVO, empno);
@@ -184,8 +189,15 @@ public class EmpController {
 		return empservice.getEmpMapList();
 	}
 	//MapTest
-	@GetMapping("/emp/map-list")
-	public List<Map<Object,Object>> TestEmpList(){
-		return empservice.TestEmpMap();
+	@GetMapping("/test/emp/map-list")
+	public List<Map<String,Object>> TestMapList(){
+		return empservice.TestGetMap();
 	}
+	//HTML에서 사원 수정하기
+	@CrossOrigin(origins = {"*"})
+	@PatchMapping("/api/v1/emp/{empno}")
+	public int callApi(@PathVariable("empno")int empno, @RequestBody EmpVO empVO) {
+		return empservice.getApi(empno, empVO);
+	}
+	
 }

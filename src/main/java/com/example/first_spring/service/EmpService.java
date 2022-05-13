@@ -95,16 +95,20 @@ public class EmpService {
 		int min = 0;
 		String temp = list.get(0).getHiredate().replace("-", "");
 		int date2 = Integer.parseInt(temp);
+		min = date2;
 		for(int i=0; i<list.size();i++) {
 			String hiredate = list.get(i).getHiredate().replace("-", "");
 			int date = Integer.parseInt(hiredate);
-			min = date2;
 			if(min>date) {
 				min = date;
+				if(i>0) {
+				list.remove(i-1);
+				i--;
 				}
-			if(i>0) {
-			list.remove(i);
-			i--;
+			}
+			if(min < date) {
+				list.remove(i);
+				i--;
 			}
 		}
 		return list;
@@ -114,6 +118,7 @@ public class EmpService {
 	public EmpVO getInfo(int empno) {
 		return empMapper.getInfo(empno);
 	}
+	
 	@Transactional(rollbackFor = {Exception.class})
 	public int setEmp(EmpVO vo) {
 		//emp에 없는 부서번호를 찾아서 해당 부서 번호로 insert 되었는지 리턴
@@ -211,6 +216,7 @@ public class EmpService {
 		return 0;
 	}
 	//Test
+	//문제 1번
 	public int TestDeptno(EmpVO empVO) {
 		EmpVO vo = empMapper.selectDeptno();
 		int deptno = vo.getDeptno();
@@ -218,29 +224,33 @@ public class EmpService {
 		int rows = empMapper.allEmp(empVO);
 		return rows;
 	}
+	//문제 2번
 	public int TestDelete(int empno) {
 		List<EmpVO> list = empMapper.getEmpList();
-		for(int i=0; i<list.size(); i++) {
+		for(int i=0; i<list.size();i++) {
 			EmpVO vo = list.get(i);
-			if(vo.getEmpno() == empno & vo.getSal() < 3000) {
+			if(vo.getEmpno() == empno & vo.getSal()<3000) {
 				return 0;
 			}
 		}
 		int rows = empMapper.RemoveSal(empno);
 		return rows;
 	}
+	//문제 3번
 	public int TestCount(String find) {
 		List<EmpVO> list = empMapper.CountName(find);
-		int count = 0;
+		int count =0;
 		for(int i=0; i<list.size(); i++) {
-			++count;
+			count++;
 		}
 		return count;
 	}
+	//문제) 직업과 급여 변경하기
 	public int TestEmpJobSal(int empno, EmpVO empVO) {
 		empVO.setEmpno(empno);
 		return empMapper.TestEmpSalJob(empVO);
 	}
+	//문제) comm이 0이라면 급여 500 더하기
 	public int TestEmpComm(int empno) {
 		EmpVO vo = empMapper.TestSelectEmpComm(empno);
 		int comm = vo.getComm();
@@ -258,7 +268,12 @@ public class EmpService {
 		return empMapper.selectEmpMapList();
 	}
 	//MapTest
-	public List<Map<Object,Object>> TestEmpMap(){
-		return empMapper.TestEmpMap();
+	public List<Map<String,Object>> TestGetMap(){
+		return empMapper.TestMapList();
+	}
+	//HTML에서 수정하기
+	public int getApi(int empno, EmpVO vo) {
+		vo.setEmpno(empno);
+		return empMapper.apiUpdate(vo);
 	}
 }
