@@ -259,7 +259,8 @@
 	WHERE
 		empno = #{empno}
 	</update>
-		
+	
+	<!-- Map으로 호출하기 -->
 	<select id="selectEmpMapList" resultType = "map">
 	SELECT
 		empno AS 사원번호,
@@ -274,7 +275,8 @@
 	INNER JOIN dept AS d
 	ON e.deptno = d.deptno
 	</select>
-
+	
+	<!-- Map 연습 -->
 	<select id="TestMapList" resultType = "Map">
 	SELECT
 		ename,
