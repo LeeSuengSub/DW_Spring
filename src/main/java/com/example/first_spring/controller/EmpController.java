@@ -188,6 +188,7 @@ public class EmpController {
 	public List<Map<String,Object>> callEmpMapList(){
 		return empservice.getEmpMapList();
 	}
+	
 	//MapTest
 	@GetMapping("/test/emp/map-list")
 	public List<Map<String,Object>> TestMapList(){
